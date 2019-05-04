@@ -1,0 +1,69 @@
+//INPUT - specifies what the initial input layer will be, the values will change with training,
+//	but the number of elements is important as this will not change and is dependent on how you
+//	wish data to enter the neural network. Numbers seperated by commas defines the number
+//	of elements. While the value is the inital value of elements in the neural network.
+//EXAMPLE: two elements in input layer.
+//TODO: change from intial values to just specifing the number of inputs.
+
+INPUT:1,-1
+
+//NPL - Neurons per layer specifies the number of neurons at each layer in the neural network
+//	this must be the first entry before any LAYER cmd.  
+//EXAMPLE: 2 neurons in the first layer, 1 neuron in the second layer. The last layer is the final/output layer
+
+NPL:2,1
+
+//LAYER - As each LAYER cmd comes you will specify the detail of that layer in order.
+//	thus first call to LAYER will begin specifying the type,bias,and weights of all neurons
+//	in that layer. LAYER parameters are number seperated by commas where the total number of
+//	elements is the number of neurons in that layer and the value specifies the type of neuron:
+//		0 - ReLU
+//		1 - Sigmoid
+//	LAYER must be followed by the comboniation of BIAS then WEIGHT commands. Where there is a
+//  BIAS and WEIGHT command for each neuron in the layer.
+//EXAMPLE: 3 neurons in first layer, all 3 are of type ReLU, must be followed by first a BIAS
+//	and then a WEIGHT call to determine the bias (if there is one) of the neuron and the edge
+//	weights going into that neuron.
+
+//LAYER1
+LAYER:0,0
+
+//BIAS - Determines the bias of the neuron. If there is no bias then put BIAS:0
+//	otherwise put any decimal value in as a bias. continual calls to BIAS will
+//	iterate through the neurons in the most current LAYER command. The first BIAS call
+//	will be the bias for the first neuron and second for the second neuron etc.
+//	the first neuron is the one that appeard first in the LAYER command.
+//	bias must be followed by a WEIGHT command to then set the edge weights of the
+//	current neuron. 
+//EXAMPLE: Bias of the first neuron (0-ReLU) in the first layer is 1 
+//TODO: Error check if there are too many bias calls for layer.
+
+//Layer 1 Neuron 1 bias
+BIAS:1
+
+//WEIGHT - Determines the edge weights going into the neuron. Numbers seperated by
+//	commas where the position of an element is the neuron/input it relates to.
+//	first weight will be attached to first input set in the INPUT command or
+//	the first neuron set in the LAYER command. The number of elements in the weight
+//	command should equal the number of elements in the neuron/input layer below.
+//	if bias was set to anything other than 0 indicating that there is a bias to 
+//	the neuron then add an additonal weight at the end of the WEIGHT command to
+//	assign an edge weight for the bias. WEIGHT must only be called after a BIAS command
+//EXAMPLE: Edge weights for layer 1 will be attached to the initial inputs. 0.2 is on x1(1),
+//0.2 is on x2(-1), while the final weight is attached to the bias 0.1 is on bias(1).
+//TODO:Error check that a BIAS command was called before it.
+
+//Layer 1 Neuron 1 edge weights
+WEIGHT:0.2,0.3,0.1
+
+//Layer 1 Neuron 2
+BIAS:1
+WEIGHT:0.5,0.6,0.4
+
+
+//LAYER2 (Output layer)
+LAYER:1
+
+//Layer 2 Neuron 1
+BIAS:1
+WEIGHT:0.8,0.9,0.7
